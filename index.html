@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffcc; /* Light Yellow background color */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff; /* White background color */
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #dddddd;
+            text-align: left;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Title Registration Form</h2>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email">
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password">
+    </div>
+    <div class="form-group">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob">
+    </div>
+    <div class="form-group">
+        <input type="checkbox" id="acceptTerms">
+        <label for="acceptTerms">I accept the terms and conditions</label>
+    </div>
+    <button onclick="submitForm()">Submit</button>
+
+    <div id="entries">
+        <h2>Entries</h2>
+        <table id="entriesTable"></table>
+    </div>
+</div>
+
+<script>
+    function submitForm() {
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var dob = document.getElementById('dob').value;
+        var acceptTerms = document.getElementById('acceptTerms').checked;
+
+        if (!name || !email || !password || !dob) {
+            alert("Please fill in all areas");
+            return;
+        }
+
+        var entriesTable = document.getElementById('entriesTable');
+        var newRow = entriesTable.insertRow();
+        var headings = ['Name', 'Email', 'Password', 'Date of Birth', 'Accepted Terms'];
+        var data = [name, email, password, dob, acceptTerms];
+
+        for (var i = 0; i < headings.length; i++) {
+            var cell = newRow.insertCell(i);
+            cell.innerHTML = headings[i] + ': ' + data[i];
+        }
+    }
+</script>
+
+</body>
+</html>

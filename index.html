@@ -71,7 +71,7 @@
         <input type="checkbox" id="acceptTerms">
         <label for="acceptTerms">I accept the terms and conditions</label>
     </div>
-    <button onclick="submitForm()">Submit</button>
+    <button type="submit" onclick="submitForm()">Submit</button>
 
     <div id="entries">
         <h2>Entries</h2>
@@ -80,8 +80,8 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Password</th>
-                <th>Date of Birth</th>
-                <th>Accepted Terms</th>
+                <th>Dob</th>
+                <th>Accepted terms?</th>
             </tr>
         </table>
     </div>
@@ -133,7 +133,7 @@
 
         var entriesTable = document.getElementById('entriesTable');
         var newRow = entriesTable.insertRow();
-        var headings = ['Name', 'Email', 'Password', 'Date of Birth', 'Accepted Terms'];
+        var headings = ['Name', 'Email', 'Password', 'Dob', 'Accepted terms?'];
         var data = [name, email, password, dob, acceptTerms];
 
         for (var i = 0; i < headings.length; i++) {

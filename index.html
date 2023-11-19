@@ -38,4 +38,134 @@
             text-align: left;
         }
         button {
-         
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Title Registration Form</h2>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email">
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password">
+    </div>
+    <div class="form-group">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob">
+    </div>
+    <div class="form-group">
+        <input type="checkbox" id="acceptTerms">
+        <label for="acceptTerms">I accept the terms and conditions</label>
+    </div>
+    <button onclick="submitForm()">Submit</button>
+
+    <div id="entries">
+        <h2>Entries</h2>
+        <table id="entriesTable">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Date of Birth</th>
+                <th>Accepted Terms</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        loadEntries();
+    });
+
+    function loadEntries() {
+        var entriesTable = document.getElementById('entriesTable');
+        var storedEntries = JSON.parse(localStorage.getItem('userEntries')) || [];
+
+        for (var i = 0; i < storedEntries.length; i++) {
+            var newRow = entriesTable.insertRow();
+            var data = storedEntries[i];
+
+            for (var j = 0; j < data.length; j++) {
+                var cell = newRow.insertCell(j);
+                cell.innerHTML = data[j];
+            }
+        }
+    }
+
+    function submitForm() {
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var dob = document.getElementById('dob').value;
+        var acceptTerms = document.getElementById('acceptTerms').checked;
+
+        if (!name || !email || !password || !dob) {
+            alert("Please fill in all areas");
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            alert("Please enter a valid email address");
+            return;
+        }
+
+        var age = calculateAge(dob);
+
+        if (age < 18 || age > 55) {
+            alert("Age must be between 18 and 55");
+            return;
+        }
+
+        var entriesTable = document.getElementById('entriesTable');
+        var newRow = entriesTable.insertRow();
+        var headings = ['Name', 'Email', 'Password', 'Date of Birth', 'Accepted Terms'];
+        var data = [name, email, password, dob, acceptTerms];
+
+        for (var i = 0; i < headings.length; i++) {
+            var cell = newRow.insertCell(i);
+            cell.innerHTML = data[i];
+        }
+
+        // Save entry to local storage
+        var storedEntries = JSON.parse(localStorage.getItem('userEntries')) || [];
+        storedEntries.push(data);
+        localStorage.setItem('userEntries', JSON.stringify(storedEntries));
+    }
+
+    function isValidEmail(email) {
+        // Simple email validation using regular expression
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function calculateAge(dob) {
+        var birthDate = new Date(dob);
+        var currentDate = new Date();
+        var age = currentDate.getFullYear() - birthDate.getFullYear();
+
+        // Adjust age if birthday hasn't occurred yet this year
+        if (currentDate.getMonth() < birthDate.getMonth() || (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
+    }
+</script>
+
+</body>
+</html>
